@@ -1,0 +1,91 @@
+ID   chloroplast  154478 BP.
+XX
+DE   CpG Island report.
+XX
+CC   Obs/Exp ratio > 0.60.
+CC   % C + % G > 50.00.
+CC   Length > 200.
+XX
+FH   Key              Location/Qualifiers
+FT   CpG island       101001..101264
+FT                    /size=264
+FT                    /Sum C+G=146
+FT                    /Percent CG=55.30
+FT                    /ObsExp=0.83
+FT   CpG island       101299..102459
+FT                    /size=1161
+FT                    /Sum C+G=656
+FT                    /Percent CG=56.50
+FT                    /ObsExp=0.94
+FT   CpG island       102628..102868
+FT                    /size=241
+FT                    /Sum C+G=138
+FT                    /Percent CG=57.26
+FT                    /ObsExp=0.71
+FT   CpG island       104013..104255
+FT                    /size=243
+FT                    /Sum C+G=129
+FT                    /Percent CG=53.09
+FT                    /ObsExp=0.88
+FT   CpG island       104863..105084
+FT                    /size=222
+FT                    /Sum C+G=119
+FT                    /Percent CG=53.60
+FT                    /ObsExp=0.98
+FT   CpG island       105400..105716
+FT                    /size=317
+FT                    /Sum C+G=169
+FT                    /Percent CG=53.31
+FT                    /ObsExp=0.84
+FT   CpG island       105786..106728
+FT                    /size=943
+FT                    /Sum C+G=528
+FT                    /Percent CG=55.99
+FT                    /ObsExp=0.98
+FT   CpG island       106939..107465
+FT                    /size=527
+FT                    /Sum C+G=300
+FT                    /Percent CG=56.93
+FT                    /ObsExp=0.91
+FT   CpG island       131174..131700
+FT                    /size=527
+FT                    /Sum C+G=297
+FT                    /Percent CG=56.36
+FT                    /ObsExp=0.93
+FT   CpG island       131911..132853
+FT                    /size=943
+FT                    /Sum C+G=527
+FT                    /Percent CG=55.89
+FT                    /ObsExp=0.98
+FT   CpG island       132923..133239
+FT                    /size=317
+FT                    /Sum C+G=170
+FT                    /Percent CG=53.63
+FT                    /ObsExp=0.82
+FT   CpG island       133555..133775
+FT                    /size=221
+FT                    /Sum C+G=120
+FT                    /Percent CG=54.30
+FT                    /ObsExp=1.03
+FT   CpG island       134384..134625
+FT                    /size=242
+FT                    /Sum C+G=131
+FT                    /Percent CG=54.13
+FT                    /ObsExp=0.90
+FT   CpG island       135771..136012
+FT                    /size=242
+FT                    /Sum C+G=139
+FT                    /Percent CG=57.44
+FT                    /ObsExp=0.71
+FT   CpG island       136180..137341
+FT                    /size=1162
+FT                    /Sum C+G=655
+FT                    /Percent CG=56.37
+FT                    /ObsExp=0.95
+FT   CpG island       137375..137639
+FT                    /size=265
+FT                    /Sum C+G=147
+FT                    /Percent CG=55.47
+FT                    /ObsExp=0.83
+FT   numislands       16
+//

@@ -1,0 +1,571 @@
+ID   mitochondria  366924 BP.
+XX
+DE   CpG Island report.
+XX
+CC   Obs/Exp ratio > 0.60.
+CC   % C + % G > 50.00.
+CC   Length > 200.
+XX
+FH   Key              Location/Qualifiers
+FT   CpG island       5888..6111
+FT                    /size=224
+FT                    /Sum C+G=110
+FT                    /Percent CG=49.11
+FT                    /ObsExp=0.89
+FT   CpG island       9026..9879
+FT                    /size=854
+FT                    /Sum C+G=456
+FT                    /Percent CG=53.40
+FT                    /ObsExp=0.96
+FT   CpG island       10014..10652
+FT                    /size=639
+FT                    /Sum C+G=340
+FT                    /Percent CG=53.21
+FT                    /ObsExp=0.91
+FT   CpG island       10897..11204
+FT                    /size=308
+FT                    /Sum C+G=157
+FT                    /Percent CG=50.97
+FT                    /ObsExp=0.81
+FT   CpG island       11221..11649
+FT                    /size=429
+FT                    /Sum C+G=212
+FT                    /Percent CG=49.42
+FT                    /ObsExp=1.00
+FT   CpG island       16833..17168
+FT                    /size=336
+FT                    /Sum C+G=183
+FT                    /Percent CG=54.46
+FT                    /ObsExp=0.98
+FT   CpG island       21147..21391
+FT                    /size=245
+FT                    /Sum C+G=127
+FT                    /Percent CG=51.84
+FT                    /ObsExp=0.91
+FT   CpG island       21452..21719
+FT                    /size=268
+FT                    /Sum C+G=142
+FT                    /Percent CG=52.99
+FT                    /ObsExp=0.81
+FT   CpG island       26697..26909
+FT                    /size=213
+FT                    /Sum C+G=113
+FT                    /Percent CG=53.05
+FT                    /ObsExp=1.57
+FT   CpG island       28281..28572
+FT                    /size=292
+FT                    /Sum C+G=165
+FT                    /Percent CG=56.51
+FT                    /ObsExp=0.99
+FT   CpG island       29263..29482
+FT                    /size=220
+FT                    /Sum C+G=115
+FT                    /Percent CG=52.27
+FT                    /ObsExp=0.88
+FT   CpG island       29997..30205
+FT                    /size=209
+FT                    /Sum C+G=103
+FT                    /Percent CG=49.28
+FT                    /ObsExp=0.99
+FT   CpG island       40174..40472
+FT                    /size=299
+FT                    /Sum C+G=149
+FT                    /Percent CG=49.83
+FT                    /ObsExp=0.97
+FT   CpG island       51846..52062
+FT                    /size=217
+FT                    /Sum C+G=125
+FT                    /Percent CG=57.60
+FT                    /ObsExp=0.74
+FT   CpG island       52142..52643
+FT                    /size=502
+FT                    /Sum C+G=289
+FT                    /Percent CG=57.57
+FT                    /ObsExp=1.00
+FT   CpG island       55246..55451
+FT                    /size=206
+FT                    /Sum C+G=99
+FT                    /Percent CG=48.06
+FT                    /ObsExp=0.84
+FT   CpG island       55986..56195
+FT                    /size=210
+FT                    /Sum C+G=109
+FT                    /Percent CG=51.90
+FT                    /ObsExp=1.27
+FT   CpG island       63947..64210
+FT                    /size=264
+FT                    /Sum C+G=157
+FT                    /Percent CG=59.47
+FT                    /ObsExp=0.82
+FT   CpG island       69917..70148
+FT                    /size=232
+FT                    /Sum C+G=123
+FT                    /Percent CG=53.02
+FT                    /ObsExp=0.98
+FT   CpG island       79105..79387
+FT                    /size=283
+FT                    /Sum C+G=149
+FT                    /Percent CG=52.65
+FT                    /ObsExp=0.87
+FT   CpG island       80753..81140
+FT                    /size=388
+FT                    /Sum C+G=231
+FT                    /Percent CG=59.54
+FT                    /ObsExp=1.00
+FT   CpG island       99863..100063
+FT                    /size=201
+FT                    /Sum C+G=99
+FT                    /Percent CG=49.25
+FT                    /ObsExp=0.74
+FT   CpG island       102409..102771
+FT                    /size=363
+FT                    /Sum C+G=189
+FT                    /Percent CG=52.07
+FT                    /ObsExp=0.88
+FT   CpG island       102936..103206
+FT                    /size=271
+FT                    /Sum C+G=142
+FT                    /Percent CG=52.40
+FT                    /ObsExp=0.92
+FT   CpG island       103861..104085
+FT                    /size=225
+FT                    /Sum C+G=117
+FT                    /Percent CG=52.00
+FT                    /ObsExp=1.13
+FT   CpG island       110551..110775
+FT                    /size=225
+FT                    /Sum C+G=107
+FT                    /Percent CG=47.56
+FT                    /ObsExp=1.18
+FT   CpG island       114747..115055
+FT                    /size=309
+FT                    /Sum C+G=152
+FT                    /Percent CG=49.19
+FT                    /ObsExp=0.99
+FT   CpG island       126829..127029
+FT                    /size=201
+FT                    /Sum C+G=107
+FT                    /Percent CG=53.23
+FT                    /ObsExp=0.79
+FT   CpG island       130691..130901
+FT                    /size=211
+FT                    /Sum C+G=112
+FT                    /Percent CG=53.08
+FT                    /ObsExp=1.09
+FT   CpG island       132154..132638
+FT                    /size=485
+FT                    /Sum C+G=280
+FT                    /Percent CG=57.73
+FT                    /ObsExp=0.87
+FT   CpG island       132656..132859
+FT                    /size=204
+FT                    /Sum C+G=123
+FT                    /Percent CG=60.29
+FT                    /ObsExp=0.90
+FT   CpG island       133370..133663
+FT                    /size=294
+FT                    /Sum C+G=157
+FT                    /Percent CG=53.40
+FT                    /ObsExp=1.10
+FT   CpG island       135462..135746
+FT                    /size=285
+FT                    /Sum C+G=147
+FT                    /Percent CG=51.58
+FT                    /ObsExp=1.06
+FT   CpG island       136027..136315
+FT                    /size=289
+FT                    /Sum C+G=146
+FT                    /Percent CG=50.52
+FT                    /ObsExp=1.15
+FT   CpG island       136391..136702
+FT                    /size=312
+FT                    /Sum C+G=182
+FT                    /Percent CG=58.33
+FT                    /ObsExp=1.02
+FT   CpG island       139890..140357
+FT                    /size=468
+FT                    /Sum C+G=252
+FT                    /Percent CG=53.85
+FT                    /ObsExp=0.94
+FT   CpG island       140376..140575
+FT                    /size=200
+FT                    /Sum C+G=106
+FT                    /Percent CG=53.00
+FT                    /ObsExp=0.72
+FT   CpG island       141935..142205
+FT                    /size=271
+FT                    /Sum C+G=137
+FT                    /Percent CG=50.55
+FT                    /ObsExp=0.94
+FT   CpG island       144453..144961
+FT                    /size=509
+FT                    /Sum C+G=276
+FT                    /Percent CG=54.22
+FT                    /ObsExp=1.02
+FT   CpG island       144987..145319
+FT                    /size=333
+FT                    /Sum C+G=165
+FT                    /Percent CG=49.55
+FT                    /ObsExp=0.93
+FT   CpG island       145505..145825
+FT                    /size=321
+FT                    /Sum C+G=177
+FT                    /Percent CG=55.14
+FT                    /ObsExp=0.75
+FT   CpG island       146468..146715
+FT                    /size=248
+FT                    /Sum C+G=133
+FT                    /Percent CG=53.63
+FT                    /ObsExp=0.81
+FT   CpG island       154960..155226
+FT                    /size=267
+FT                    /Sum C+G=140
+FT                    /Percent CG=52.43
+FT                    /ObsExp=0.93
+FT   CpG island       155490..155953
+FT                    /size=464
+FT                    /Sum C+G=246
+FT                    /Percent CG=53.02
+FT                    /ObsExp=0.93
+FT   CpG island       156108..156355
+FT                    /size=248
+FT                    /Sum C+G=133
+FT                    /Percent CG=53.63
+FT                    /ObsExp=0.84
+FT   CpG island       158686..158887
+FT                    /size=202
+FT                    /Sum C+G=100
+FT                    /Percent CG=49.50
+FT                    /ObsExp=0.93
+FT   CpG island       162150..162601
+FT                    /size=452
+FT                    /Sum C+G=237
+FT                    /Percent CG=52.43
+FT                    /ObsExp=0.90
+FT   CpG island       162994..163224
+FT                    /size=231
+FT                    /Sum C+G=111
+FT                    /Percent CG=48.05
+FT                    /ObsExp=0.98
+FT   CpG island       164123..164415
+FT                    /size=293
+FT                    /Sum C+G=158
+FT                    /Percent CG=53.92
+FT                    /ObsExp=0.94
+FT   CpG island       164812..165387
+FT                    /size=576
+FT                    /Sum C+G=326
+FT                    /Percent CG=56.60
+FT                    /ObsExp=1.02
+FT   CpG island       166241..166526
+FT                    /size=286
+FT                    /Sum C+G=154
+FT                    /Percent CG=53.85
+FT                    /ObsExp=1.08
+FT   CpG island       166674..167028
+FT                    /size=355
+FT                    /Sum C+G=187
+FT                    /Percent CG=52.68
+FT                    /ObsExp=0.94
+FT   CpG island       167834..168051
+FT                    /size=218
+FT                    /Sum C+G=116
+FT                    /Percent CG=53.21
+FT                    /ObsExp=1.10
+FT   CpG island       168385..168661
+FT                    /size=277
+FT                    /Sum C+G=156
+FT                    /Percent CG=56.32
+FT                    /ObsExp=0.74
+FT   CpG island       168746..168949
+FT                    /size=204
+FT                    /Sum C+G=112
+FT                    /Percent CG=54.90
+FT                    /ObsExp=0.98
+FT   CpG island       169042..169359
+FT                    /size=318
+FT                    /Sum C+G=170
+FT                    /Percent CG=53.46
+FT                    /ObsExp=1.06
+FT   CpG island       170163..170427
+FT                    /size=265
+FT                    /Sum C+G=144
+FT                    /Percent CG=54.34
+FT                    /ObsExp=0.99
+FT   CpG island       172477..172733
+FT                    /size=257
+FT                    /Sum C+G=129
+FT                    /Percent CG=50.19
+FT                    /ObsExp=0.68
+FT   CpG island       172885..173095
+FT                    /size=211
+FT                    /Sum C+G=105
+FT                    /Percent CG=49.76
+FT                    /ObsExp=0.93
+FT   CpG island       189299..189519
+FT                    /size=221
+FT                    /Sum C+G=128
+FT                    /Percent CG=57.92
+FT                    /ObsExp=0.92
+FT   CpG island       190517..190899
+FT                    /size=383
+FT                    /Sum C+G=218
+FT                    /Percent CG=56.92
+FT                    /ObsExp=0.82
+FT   CpG island       190956..191312
+FT                    /size=357
+FT                    /Sum C+G=195
+FT                    /Percent CG=54.62
+FT                    /ObsExp=1.23
+FT   CpG island       201490..201750
+FT                    /size=261
+FT                    /Sum C+G=134
+FT                    /Percent CG=51.34
+FT                    /ObsExp=1.18
+FT   CpG island       202226..202426
+FT                    /size=201
+FT                    /Sum C+G=102
+FT                    /Percent CG=50.75
+FT                    /ObsExp=0.89
+FT   CpG island       211134..211406
+FT                    /size=273
+FT                    /Sum C+G=132
+FT                    /Percent CG=48.35
+FT                    /ObsExp=0.92
+FT   CpG island       217680..217990
+FT                    /size=311
+FT                    /Sum C+G=176
+FT                    /Percent CG=56.59
+FT                    /ObsExp=1.22
+FT   CpG island       219799..220018
+FT                    /size=220
+FT                    /Sum C+G=117
+FT                    /Percent CG=53.18
+FT                    /ObsExp=0.97
+FT   CpG island       220239..220445
+FT                    /size=207
+FT                    /Sum C+G=109
+FT                    /Percent CG=52.66
+FT                    /ObsExp=1.07
+FT   CpG island       227143..227367
+FT                    /size=225
+FT                    /Sum C+G=117
+FT                    /Percent CG=52.00
+FT                    /ObsExp=1.13
+FT   CpG island       227574..227897
+FT                    /size=324
+FT                    /Sum C+G=160
+FT                    /Percent CG=49.38
+FT                    /ObsExp=1.07
+FT   CpG island       232034..232241
+FT                    /size=208
+FT                    /Sum C+G=106
+FT                    /Percent CG=50.96
+FT                    /ObsExp=1.11
+FT   CpG island       233131..233341
+FT                    /size=211
+FT                    /Sum C+G=122
+FT                    /Percent CG=57.82
+FT                    /ObsExp=0.91
+FT   CpG island       235512..235820
+FT                    /size=309
+FT                    /Sum C+G=156
+FT                    /Percent CG=50.49
+FT                    /ObsExp=0.92
+FT   CpG island       236916..237520
+FT                    /size=605
+FT                    /Sum C+G=319
+FT                    /Percent CG=52.73
+FT                    /ObsExp=1.08
+FT   CpG island       242640..242851
+FT                    /size=212
+FT                    /Sum C+G=108
+FT                    /Percent CG=50.94
+FT                    /ObsExp=0.87
+FT   CpG island       242925..243190
+FT                    /size=266
+FT                    /Sum C+G=140
+FT                    /Percent CG=52.63
+FT                    /ObsExp=0.73
+FT   CpG island       245113..245514
+FT                    /size=402
+FT                    /Sum C+G=202
+FT                    /Percent CG=50.25
+FT                    /ObsExp=1.03
+FT   CpG island       251612..251822
+FT                    /size=211
+FT                    /Sum C+G=105
+FT                    /Percent CG=49.76
+FT                    /ObsExp=1.05
+FT   CpG island       256233..256447
+FT                    /size=215
+FT                    /Sum C+G=104
+FT                    /Percent CG=48.37
+FT                    /ObsExp=0.96
+FT   CpG island       256620..256954
+FT                    /size=335
+FT                    /Sum C+G=174
+FT                    /Percent CG=51.94
+FT                    /ObsExp=1.08
+FT   CpG island       257333..257579
+FT                    /size=247
+FT                    /Sum C+G=133
+FT                    /Percent CG=53.85
+FT                    /ObsExp=1.07
+FT   CpG island       261044..261467
+FT                    /size=424
+FT                    /Sum C+G=224
+FT                    /Percent CG=52.83
+FT                    /ObsExp=0.95
+FT   CpG island       266889..267115
+FT                    /size=227
+FT                    /Sum C+G=110
+FT                    /Percent CG=48.46
+FT                    /ObsExp=0.81
+FT   CpG island       267608..267807
+FT                    /size=200
+FT                    /Sum C+G=95
+FT                    /Percent CG=47.50
+FT                    /ObsExp=0.80
+FT   CpG island       279727..280352
+FT                    /size=626
+FT                    /Sum C+G=338
+FT                    /Percent CG=53.99
+FT                    /ObsExp=0.94
+FT   CpG island       282315..282682
+FT                    /size=368
+FT                    /Sum C+G=188
+FT                    /Percent CG=51.09
+FT                    /ObsExp=0.75
+FT   CpG island       283369..283938
+FT                    /size=570
+FT                    /Sum C+G=283
+FT                    /Percent CG=49.65
+FT                    /ObsExp=1.02
+FT   CpG island       287103..287462
+FT                    /size=360
+FT                    /Sum C+G=184
+FT                    /Percent CG=51.11
+FT                    /ObsExp=1.06
+FT   CpG island       288254..288522
+FT                    /size=269
+FT                    /Sum C+G=139
+FT                    /Percent CG=51.67
+FT                    /ObsExp=0.91
+FT   CpG island       288625..289000
+FT                    /size=376
+FT                    /Sum C+G=219
+FT                    /Percent CG=58.24
+FT                    /ObsExp=0.98
+FT   CpG island       290051..290280
+FT                    /size=230
+FT                    /Sum C+G=115
+FT                    /Percent CG=50.00
+FT                    /ObsExp=0.77
+FT   CpG island       294663..294970
+FT                    /size=308
+FT                    /Sum C+G=152
+FT                    /Percent CG=49.35
+FT                    /ObsExp=1.00
+FT   CpG island       303177..303431
+FT                    /size=255
+FT                    /Sum C+G=131
+FT                    /Percent CG=51.37
+FT                    /ObsExp=1.06
+FT   CpG island       303922..304424
+FT                    /size=503
+FT                    /Sum C+G=289
+FT                    /Percent CG=57.46
+FT                    /ObsExp=0.85
+FT   CpG island       306821..307111
+FT                    /size=291
+FT                    /Sum C+G=151
+FT                    /Percent CG=51.89
+FT                    /ObsExp=0.89
+FT   CpG island       317169..317551
+FT                    /size=383
+FT                    /Sum C+G=195
+FT                    /Percent CG=50.91
+FT                    /ObsExp=0.97
+FT   CpG island       318961..319176
+FT                    /size=216
+FT                    /Sum C+G=121
+FT                    /Percent CG=56.02
+FT                    /ObsExp=0.96
+FT   CpG island       329590..329830
+FT                    /size=241
+FT                    /Sum C+G=123
+FT                    /Percent CG=51.04
+FT                    /ObsExp=1.12
+FT   CpG island       330641..330998
+FT                    /size=358
+FT                    /Sum C+G=198
+FT                    /Percent CG=55.31
+FT                    /ObsExp=1.04
+FT   CpG island       331129..331352
+FT                    /size=224
+FT                    /Sum C+G=117
+FT                    /Percent CG=52.23
+FT                    /ObsExp=1.05
+FT   CpG island       331812..332025
+FT                    /size=214
+FT                    /Sum C+G=109
+FT                    /Percent CG=50.93
+FT                    /ObsExp=0.95
+FT   CpG island       332546..332749
+FT                    /size=204
+FT                    /Sum C+G=112
+FT                    /Percent CG=54.90
+FT                    /ObsExp=0.98
+FT   CpG island       332758..332981
+FT                    /size=224
+FT                    /Sum C+G=121
+FT                    /Percent CG=54.02
+FT                    /ObsExp=0.93
+FT   CpG island       340684..340948
+FT                    /size=265
+FT                    /Sum C+G=135
+FT                    /Percent CG=50.94
+FT                    /ObsExp=1.11
+FT   CpG island       353955..354177
+FT                    /size=223
+FT                    /Sum C+G=113
+FT                    /Percent CG=50.67
+FT                    /ObsExp=0.78
+FT   CpG island       354757..355081
+FT                    /size=325
+FT                    /Sum C+G=160
+FT                    /Percent CG=49.23
+FT                    /ObsExp=1.19
+FT   CpG island       358120..358351
+FT                    /size=232
+FT                    /Sum C+G=118
+FT                    /Percent CG=50.86
+FT                    /ObsExp=1.30
+FT   CpG island       361445..361704
+FT                    /size=260
+FT                    /Sum C+G=137
+FT                    /Percent CG=52.69
+FT                    /ObsExp=0.94
+FT   CpG island       361736..361973
+FT                    /size=238
+FT                    /Sum C+G=131
+FT                    /Percent CG=55.04
+FT                    /ObsExp=1.17
+FT   CpG island       362304..362929
+FT                    /size=626
+FT                    /Sum C+G=346
+FT                    /Percent CG=55.27
+FT                    /ObsExp=1.02
+FT   CpG island       363025..363254
+FT                    /size=230
+FT                    /Sum C+G=120
+FT                    /Percent CG=52.17
+FT                    /ObsExp=0.94
+FT   CpG island       364893..365205
+FT                    /size=313
+FT                    /Sum C+G=162
+FT                    /Percent CG=51.76
+FT                    /ObsExp=0.91
+FT   numislands       112
+//
