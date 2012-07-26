@@ -30,6 +30,8 @@ int main(int argc, char ** argv)
     std::string start_base, end_base;
     boost::regex pat(regex_island);
 
+    std::cout << "##gff-version 3" << std::endl;
+
     while (std::cin)
     {
         field_t field = UNKNOWN_FIELD;
@@ -54,6 +56,8 @@ int main(int argc, char ** argv)
            else
               continue; // bad field
         }
+        else
+          continue;
  
         cur++;
 
@@ -70,9 +74,11 @@ int main(int argc, char ** argv)
                 }
                 if (col == 4 && has_cpg_coords)
                 {
-                   dot_loc = cur->find('.');
-                   start_base = cur->substr(0, dot_loc - 1);
-                   end_base   = cur->substr(dot_loc + 2);
+                   start_base = *cur;
+                }
+                if (col == 5 && has_cpg_coords)
+                {
+                   end_base = *cur;
                    cpg_coords_found = true;
                 }
                 break;
@@ -90,7 +96,8 @@ int main(int argc, char ** argv)
                      << end_base <<"\t"
                      << "."      << "\t"
                      << "."      << "\t"
-                     << "."      << std::endl;
+                     << "."      << "\t"
+                     << " "      << std::endl;
     }
    return 0;
 }
