@@ -12,24 +12,85 @@
  *
  *************************************************/
 
-
+#include <boost/tokenizer.hpp>
 #include <boost/regex.hpp>
 #include <iostream>
 #include <string>
 
-const std::string regex_island = "IS";
+const std::string regex_island = "FT[ ]*CpG island[ \t]*(.*)";
+const std::string regex_id     = "ID[ \t]*[^ \t]*";
+
+typedef enum { ID_FIELD, FT_FIELD, UNKNOWN_FIELD } field_t;
 
 int main(int argc, char ** argv)
 {
+    boost::tokenizer<> tok(regex_island);
+    std::string seqid;
     std::string line;
+    std::string start_base, end_base;
     boost::regex pat(regex_island);
 
     while (std::cin)
     {
+        field_t field = UNKNOWN_FIELD;
+        int col = 1;
+
+        bool has_cpg_coords  = false;
+        bool cpg_coords_found = false;
+
+        size_t dot_loc;
         std::getline(std::cin, line);
-        boost::smatch matches;
-        if (boost::regex_match(line, matches, pat))
-            std::cout << matches[2] << std::endl;
+        boost::tokenizer<> tok(line);
+        boost::tokenizer<>::iterator cur = tok.begin();
+ 
+   
+
+        if (tok.begin() != tok.end())
+        {
+           if (cur->compare("ID") == 0)
+              field = ID_FIELD;
+           else if (cur->compare("FT") == 0)
+              field = FT_FIELD;
+           else
+              continue; // bad field
+        }
+ 
+        cur++;
+
+        for (; cur!= tok.end(); cur++)
+        { 
+            col++;
+            switch(field)
+            {
+            case FT_FIELD:
+                if (col == 2 && !cur->compare("CpG"))
+                {
+                   has_cpg_coords = true;
+                   break;
+                }
+                if (col == 4 && has_cpg_coords)
+                {
+                   dot_loc = cur->find('.');
+                   start_base = cur->substr(0, dot_loc - 1);
+                   end_base   = cur->substr(dot_loc + 2);
+                   cpg_coords_found = true;
+                }
+                break;
+            case ID_FIELD:
+                if (col == 2)
+                   seqid = *cur;
+                break;
+            }
+        }
+       if (cpg_coords_found)
+           std::cout << seqid << "\t"
+                     << "."   << "\t" 
+                     << "CpGI" << "\t"
+                     << start_base << "\t" 
+                     << end_base <<"\t"
+                     << "."      << "\t"
+                     << "."      << "\t"
+                     << "."      << std::endl;
     }
    return 0;
 }
