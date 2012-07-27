@@ -31,7 +31,6 @@
 *       
 *
 *  When read gene: 
-*                  second_latest_tss <- latest_tss
 *                  latest_tss        <- gene's tss
 *                  latest_gene       <- gene reference
 *
@@ -52,14 +51,28 @@ void usage(const char * name)
    printf("Usage: %s <fileName>\n", name);
 }
 
+inline int in_range(unsigned long num, unsigned long min, unsigned long max)
+{
+   return (num >= min && num <= max) ? 1 : 0;
+}
+
 int main(int argc, char ** argv)
 {
+    int i;
+    char * type;
+    char * seqid;
     GtError *err;
     GtNodeStream * in_stream;
-    GtGenomeNode * node;
+    GtGenomeNode * node, *latest_gene, *latest_cpgi;
+    GtFeatureNodeIterator* feat_iter;
+    GtFeatureNode * cur_feat;
+    GtFeatureIndex *feature_index;
+    GtArray * feature_array;
+
    
-    unsigned long latest_tss; // tss for the last entry gene we read
-    unsigned long second_latest_tss; // tss for the second to last entry we read
+    unsigned long latest_tss        = 0; // tss for the last entry gene we read
+    unsigned long latest_cpgi_start = 0;
+    unsigned long latest_cpgi_end   = 0;
 
     int err_num;
 
@@ -73,12 +86,27 @@ int main(int argc, char ** argv)
     gt_lib_init();
     err = gt_error_new();
 
-    // open the gff3 file we are evaluating
-    in_stream = gt_gff3_in_stream_new_sorted(argv[1]);  
-      
-    // parse the file
-    
+    feature_index = gt_feature_index_memory_new();
+
+    if (gt_feature_index_add_gff3file(feature_index, argv[1], err))
+    {
+       printf("Falied gt_feature_index_add_gff3file %s\n", argv[1]);
+    }
+
+
+
+    seqid = gt_feature_index_get_first_seqid(feature_index);
+    feature_array = gt_feature_index_get_features_for_seqid(feature_index, seqid);
+    printf("Seqid = %s\n", seqid);
+
+    for (i = 0; i < gt_array_size(feature_array); i++)
+    {
+       cur_feat = gt_array_get(feature_array,i);
+       printf("%s\n", gt_feature_node_get_type(cur_feat));
+    }
+
     // close genome tools
+    gt_feature_index_delete(feature_index);
     gt_error_delete(err);
     gt_lib_clean();
     return 0;
