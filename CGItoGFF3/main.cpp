@@ -19,11 +19,9 @@ typedef enum { ID_FIELD, FT_FIELD, UNKNOWN_FIELD } field_t;
 
 int main(int argc, char ** argv)
 {
-    boost::tokenizer<> tok(regex_island);
     std::string seqid;
     std::string line;
     std::string start_base, end_base;
-    boost::regex pat(regex_island);
 
     std::cout << "##gff-version 3" << std::endl;
 
