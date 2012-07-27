@@ -7,18 +7,13 @@
  *    @section DESCRIPTION
  *       convert CPGISLE format to GFF3
  *       TODO: insert into current GFF3 document
- *       This code adapted from sample BOOST library
- *       code located at http://www.boost.org/doc/libs/1_50_0/more/getting_started/unix-variants.html#id33
  *
  *************************************************/
 
 #include <boost/tokenizer.hpp>
-#include <boost/regex.hpp>
 #include <iostream>
 #include <string>
 
-const std::string regex_island = "FT[ ]*CpG island[ \t]*(.*)";
-const std::string regex_id     = "ID[ \t]*[^ \t]*";
 
 typedef enum { ID_FIELD, FT_FIELD, UNKNOWN_FIELD } field_t;
 
