@@ -1,13 +1,47 @@
-/* @file
- * @author brock a <brock.wright.anderson@gmail.cm>
- *
- *
- *
- *
- *
- *
- */
+/*
+* @file
+* @author Brock Anderson <brock.wright.anderson@gmail.com>
+* @section LICENSE
+* Released to public domain without restriction
+*
+* @section DESCRIPTION
+* Find CpGI that overlap TSS, mark as such
+*
+*
+*
+* Scenarios:
+*
+* CpGI              <---------------------------->
+* genes     
+*  (+) contained               <-----|     
+*  (-) contained                       |----->
+*  (+) periphery                             <--------|
+*  (-) periphery |-------->
+*
+*
+*  When you read a CpGI:
+*     latest_CpGINode  <- node_pointer
+*     cpgi_start       <- node_pointer->start
+*     cpgi_end         <- node_pointe->end
+*
+*     // see if (-) periphery case satisfied
+*     if (in_range(latest_tss, cpgi_start, cpgi_end))
+*         mark(latest_CpGINode)  
+*         mark(latest_gene)  // tell which CpGINode also
+*       
+*
+*  When read gene: 
+*                  latest_tss        <- gene's tss
+*                  latest_gene       <- gene reference
+*
+*                  // below case covers contained statements and
+*                  // (+) periphery
+*                  if (in_range(latest_tss,cpgi_start,cpgi_end)
+*                      mark(latest_CpGINode)
+*                      mark(latest_gene) // tell which CpGINode also
+                   
 
+*************************************************/
 #include <genometools.h>
 #include "CpGIOverlap_stream.h"
 
