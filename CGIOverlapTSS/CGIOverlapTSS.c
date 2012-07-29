@@ -97,9 +97,9 @@ int main(int argc, char ** argv)
 
     seqid = gt_feature_index_get_first_seqid(feature_index);
     feature_array = gt_feature_index_get_features_for_seqid(feature_index, seqid);
-    printf("Seqid = %s\n", seqid);
+    printf("Seqid = %s\n size =%d", seqid, gt_array_size(feature_array));
 
-    for (i = 0; i < gt_array_size(feature_array); i++)
+    for (i = 0; i < gt_array_size(feature_array) && i < 2; i++)
     {
        cur_feat = gt_array_get(feature_array,i);
        printf("%s\n", gt_feature_node_get_type(cur_feat));
