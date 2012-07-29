@@ -14,13 +14,17 @@ GT_LDFLAGS:=-L$(prefix)/lib \
             -L/usr/local/lib \
             -L/opt/local/lib
 
-all: CGIOverlapTSS
+SOURCES=island_overlap_tss.c CpGIOverlap_stream/CpGIOverlap_stream.c
+OBJECTS=$(SOURCES:.c=.o)
 
-CGIOverlapTSS: CGIOverlapTSS.o
-	$(LD) $(LDFLAGS) $(GT_LDFLAGS) $< -lm -lgenometools -lcairo -o $@
+all: $(SOURCES) island_overlap_tss
+
+island_overlap_tss: $(OBJECTS)
+	$(LD) $(LDFLAGS) $(GT_LDFLAGS) $(OBJECTS) -lm -lgenometools -lcairo -o $@
+
 
 # generic compilation rule which creates dependency file on the fly
-%.o: %.c
+.c.o:
 	$(CC) -c $< -o $@ $(CFLAGS) $(GT_CFLAGS) -MT $@ -MMD -MP -MF $(@:.o=.d)
 
 # read dependencies
@@ -28,4 +32,4 @@ CGIOverlapTSS: CGIOverlapTSS.o
 
 .PHONY: clean
 clean:
-	rm -f *.[od]
+	rm -f *.[od] island_overlap_tss
