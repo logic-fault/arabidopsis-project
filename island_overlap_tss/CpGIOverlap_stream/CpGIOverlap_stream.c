@@ -63,6 +63,7 @@ struct CpGIOverlap_stream {
     unsigned long latest_tss;
     int emptying_buffer;
     int building_buffer;
+    int eof_found;
 };
 
 typedef enum { FT_CPGI, FT_GENE, FT_OTHER } overlap_feature_type_t;
@@ -74,6 +75,11 @@ const char * feature_type_gene = "gene";
 const GtNodeStreamClass * CpGIOverlap_stream_class(void);
 
 #define CpGIOverlap_stream_cast(GS) gt_node_stream_cast(CpGIOverlap_stream_class(), GS);
+
+static inline int in_island(unsigned long tss, island_t island)
+{
+    return (tss >= island.begin && tss <= island.end) ? 1 : 0;
+}
 
 overlap_feature_type_t determine_feature_type(const char * t)
 {
@@ -114,9 +120,19 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
         *gn = gt_array_pop(overlap_stream->node_buffer);
         return;
     }
-    else
+    else if (overlap_stream->emptying_buffer && !eof_found)
     {
+        // if we were emptying a buffer take care of getting ready here
         overlap_stream->emptying_buffer = 0;
+
+        // now put the latest gene into the buffer array
+        gt_array_add(overlap_stream->node_buffer, overlap_stream->latest_gene_node);
+    }
+    else if (eof_found)
+    {
+        // we've emptied buffer and nothing is left;
+        *gn = NULL;
+        return;
     }
 
     // find genes. If not a gene send on its way, possibly saving CpGI
@@ -223,10 +239,11 @@ GtNodeStream * CpGIOverlap_stream_new(GtNodeStream * in_stream)
     overlap_stream->latest_tss   = 0;
  
     // stream eof hasn't been found yet
-    overlap_stream->emptying_buffer = 0;
+    overlap_stream->eof_found = 0;
 
     // we aren't buffering for status of gene overlap
     overlap_stream->building_buffer = 0;
+    overlap_stream->emptying_buffer = 0;
 
     // haven't found a cpGI or gene yet
     overlap_stream->latest_CpGI_node = NULL;
