@@ -125,8 +125,9 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
         // if we were emptying a buffer take care of getting ready here
         overlap_stream->emptying_buffer = 0;
 
-        // now put the latest gene into the buffer array
-        gt_array_add(overlap_stream->node_buffer, overlap_stream->latest_gene_node);
+        // now put the latest gene into the buffer array if needed
+        if (overlap_stream->building_buffer)
+            gt_array_add(overlap_stream->node_buffer, overlap_stream->latest_gene_node);
     }
     else if (eof_found)
     {
@@ -173,11 +174,52 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
                         overlap_stream->latest_gene_node = cur_node;
                         overlap_stream->latest_tss = (gt_feature_node_get_strand(cur_node) == GT_STRAND_FORWARD) ? gt_genome_node_get_start(cur_node) : 
                         gt_genome_node_get_end(cur_node);
+                        
+                        // now we see if we can mark for overlap
+                        if (in_island(overlap_stream->latest_tss, overlap_stream->island))
+                        {
+                           // TODO: mark current node
+                           // mark it, we're on our way
+                           overlap_stream->building_buffer = 0;
+                           overlap_stream->emptying_buffer = 1;
+                           gt_array_add(cur_node);
+                           gt_array_reverse(overlap_stream->node_buffer);
+                           *gn = gt_array_pop(overlap_stream->node_buffer);
+                           return 0;
+                        }
+                        else // possible in next island
+                        {
+                            overlap_stream->building_buffer = 1;
+                            gt_array_reverse(overlap_stream->node_buffer);
+                            if (gt_array_size(overlap_stream->node_buffer) > 0)
+                            {
+                                *gn = gt_array_pop(overlap_stream->node_buffer);
+                                overlap_stream->emptying_buffer = 1;
+                            }
+                        }
+                        else
+                        {
+                            // there was no buffer, continue
+                        }
+                        // now we see if we can mark for overlap
                         break;
                     case FT_CPGI:
                         overlap_stream->island.start = gt_genome_node_get_start(cur_node);
                         overlap_stream->island.end   = gt_genome_node_get_end(cur_node);
                         overlap_stream->latest_CpGI_node = cur_node;
+
+                        // test previous gene, then clear the buffer
+                        if (in_island(latest_tss, overlap_stream->island))
+                        {
+                           //TODO: mark the gene
+                        }
+                       
+                        overlap_stream->building_buffer = 0;
+                        overlap_stream->emptying_buffer = 1;
+                        gt_array_add(overlap_stream->node_buffer, cur_node);
+                        gt_array_reverse(overlap_stream->node_buffer);
+                        *gn = gt_array_pop(overlap_stream->node_buffer);
+
                         break;
                     default:
                         if (overlap_stream->building_buffer)
