@@ -62,6 +62,8 @@ struct CpGIOverlap_stream {
     unsigned long latest_tss;
 };
 
+const GtNodeStreamClass * CpGIOverlap_stream_class(void);
+
 #define CpGIOverlap_stream_cast(GS) gt_node_stream_cast(CpGIOverlap_stream_class(), GS);
 
 
@@ -69,7 +71,23 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
                                    GtGenomeNode ** gn,
                                    GtError * err)
 {
-    return 0;
+    CpGIOverlap_stream * overlap_stream;
+    GtGenomeNode * cur_node;
+    int err_num = 0;
+    *gn = NULL;
+
+    overlap_stream = CpGIOverlap_stream_cast(ns);
+    while (! (err_num = gt_node_stream_next(overlap_stream->in_stream,
+                                            &cur_node,
+                                            err
+                                           )) && cur_node != NULL
+          )
+    {
+        *gn = cur_node;
+    }
+
+
+    return err_num;
 }
 
 static void CpGIOverlap_stream_free(GtNodeStream * ns)
@@ -81,6 +99,7 @@ static void CpGIOverlap_stream_free(GtNodeStream * ns)
 const GtNodeStreamClass * CpGIOverlap_stream_class(void)
 {
     static const GtNodeStreamClass * c = NULL;
+
     if (!c)
     {
         c = gt_node_stream_class_new( sizeof(CpGIOverlap_stream),
