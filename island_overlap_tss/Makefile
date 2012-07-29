@@ -1,3 +1,7 @@
+# genometools project 2012
+# Brock Anderson 2012
+
+
 # set prefix for libgenometools
 prefix ?= /usr/local
 
