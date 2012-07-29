@@ -58,6 +58,7 @@ struct CpGIOverlap_stream {
     unsigned long index;
     GtGenomeNode * latest_CpGI_node;
     GtGenomeNode * latest_gene_node;
+    GtArray      * node_buffer;
     island_t island;
     unsigned long latest_tss;
 };
@@ -71,6 +72,13 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
                                    GtGenomeNode ** gn,
                                    GtError * err)
 {
+    /*   Buffer upon encountering a gene entry until we 
+     *   determine whether a CpGI overlapts it's TSS
+     *   That is, buffer it until we encounter the next
+     *   CpGI or until we marked it as being overlapped
+     *   with the last discovered CpGI or until end of stream
+     *
+     */
     CpGIOverlap_stream * overlap_stream;
     GtGenomeNode * cur_node;
     int err_num = 0;
@@ -84,6 +92,7 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
           )
     {
         *gn = cur_node;
+        break;
     }
 
 
@@ -92,7 +101,10 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
 
 static void CpGIOverlap_stream_free(GtNodeStream * ns)
 {
-
+    CpGIOverlap_stream * overlap_stream;
+    
+    overlap_stream = CpGIOverlap_stream_cast(ns);
+    gt_array_delete(overlap_stream->node_buffer);
     return;
 }
 
@@ -119,6 +131,7 @@ GtNodeStream * CpGIOverlap_stream_new(GtNodeStream * in_stream)
     gt_assert(in_stream);
     overlap_stream->in_stream = gt_node_stream_ref(in_stream);
 
+    overlap_stream->node_buffer = gt_array_new(sizeof(GtGenomeNode *));
     overlap_stream->index = 0;
 
     // we haven't found an island yet
