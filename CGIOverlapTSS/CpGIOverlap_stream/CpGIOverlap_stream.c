@@ -50,20 +50,33 @@ typedef struct
 {
     unsigned long start;
     unsigned long end;
-} island_t
+} island_t;
 
 struct CpGIOverlap_stream {
     const GtNodeStream parent_instance;
     GtNodeStream * in_stream;
     unsigned long index;
-    gtGenomeNode * latest_CpGI_node;
-    gtGenomeNode * latest_gene_node;
+    GtGenomeNode * latest_CpGI_node;
+    GtGenomeNode * latest_gene_node;
     island_t island;
     unsigned long latest_tss;
 };
 
-#define CpGIOverlap_stream_cast(GS) CpGIOverlap_stream_cast(CpGI_overlap_stream_class(), GS);
+#define CpGIOverlap_stream_cast(GS) gt_node_stream_cast(CpGIOverlap_stream_class(), GS);
 
+
+static int CpGIOverlap_stream_next(GtNodeStream * ns,
+                                   GtGenomeNode ** gn,
+                                   GtError * err)
+{
+    return 0;
+}
+
+static void CpGIOverlap_stream_free(GtNodeStream * ns)
+{
+
+    return;
+}
 
 const GtNodeStreamClass * CpGIOverlap_stream_class(void)
 {
@@ -98,13 +111,6 @@ GtNodeStream * CpGIOverlap_stream_new(GtNodeStream * in_stream)
     overlap_stream->latest_CpGI_node = NULL;
     overlap_stream->latest_gene_node = NULL;
 
-
+    return ns;
  
-}
-
-static int CpGIOverlap_stream_next(GtNodeStream * ns,
-                                   GtGenomeNode ** gn,
-                                   GtError * err)
-{
-    return 0;
 }

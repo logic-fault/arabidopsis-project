@@ -27,6 +27,7 @@ int main(int argc, char ** argv)
 {
     GtNodeStream * in, * overlap, * out;
     GtFile * out_file;
+    GtError * err;
 
     if (argc != 2)
     {
@@ -44,7 +45,7 @@ int main(int argc, char ** argv)
         exit(1);
     }
 
-    if (!(overlap = CpGI_overlap_stream_new(in)))
+    if (!(overlap = CpGIOverlap_stream_new(in)))
     {
         fprintf(stderr, "Failed to create CpGI overlap stream\n");
         exit(1);
