@@ -60,7 +60,8 @@ int main(int argc, char ** argv)
         fprintf(stderr, "Failed to create CpGI overlap stream\n");
         exit(1);
     }
-
+    out = gt_gff3_out_stream_new(in, out_file);
+    
     if (!(out = gt_gff3_out_stream_new(overlap, out_file)))
     {
         gt_node_stream_delete(overlap);
