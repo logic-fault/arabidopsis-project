@@ -173,10 +173,6 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
         {
             pseudo_node = cur_node;
 
-            #if DEBUG_OVERLAP
-            printf("node_start=%d\n", gt_genome_node_get_start(cur_node));
-            #endif
-
             // try casting as a feature node so we can test type
             if(!gt_genome_node_try_cast(gt_feature_node_class(), cur_node))
             {
@@ -192,6 +188,7 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
             else // we found a feature node
             {
                 #if DEBUG_OVERLAP
+                printf("node_start=%d\n", gt_genome_node_get_start(cur_node));
                 printf("Feature\n");
                 #endif
 
@@ -287,6 +284,7 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
                             else
                             {
                                 gt_array_add(overlap_stream->node_buffer, pseudo_node);
+                                continue;
                             }
                         }
                         break;
