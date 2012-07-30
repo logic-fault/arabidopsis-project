@@ -111,6 +111,7 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
     overlap_feature_type_t feature_type;
     CpGIOverlap_stream * overlap_stream;
     GtGenomeNode * cur_node;
+    GtFeatureNode * rep;
     int err_num = 0;
     *gn = NULL;
 
@@ -167,6 +168,10 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
                               ) && cur_node != NULL
           )
         {
+            #if DEBUG_OVERLAP
+            printf("node_start=%d\n", gt_genome_node_get_start(cur_node));
+            #endif
+
             // try casting as a feature node so we can test type
             if(!gt_genome_node_try_cast(gt_feature_node_class(), cur_node))
             {
@@ -188,6 +193,17 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
                 const char * szType = gt_feature_node_get_type(cur_node);
                 if (szType == NULL)
                 {
+                    #if DEBUG_OVERLAP
+                    printf("Feature had no type\n");
+                    if(gt_feature_node_is_pseudo(cur_node))
+                        printf("Feature is pseudo\n");
+                    if (gt_feature_node_is_multi(cur_node))
+                    {
+                        printf("Feature is multi\n");
+                        rep = gt_feature_node_get_multi_representative(cur_node);
+                        printf("rep type=%s\n", gt_feature_node_get_type(rep));
+                    }
+                    #endif
                     if (overlap_stream->building_buffer)
                        gt_array_add(overlap_stream->node_buffer, cur_node);
                     else
@@ -201,8 +217,9 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
                     case FT_GENE:
                         #if DEBUG_OVERLAP
                         printf("In a GENE\n");
+                        printf("Gene Id=%s\n", gt_feature_node_get_attribute(cur_node, "ID"));
                         #endif
-
+                    
                         if (gt_genome_node_get_start(cur_node) == 23146)
                            printf("Found the gene within gene 23146\n");
 
