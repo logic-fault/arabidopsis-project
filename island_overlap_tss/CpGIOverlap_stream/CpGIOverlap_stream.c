@@ -43,10 +43,12 @@
 
 *************************************************/
 #include <genometools.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "CpGIOverlap_stream.h"
-#include "stdio.h"
 
-#define DEBUG_OVERLAP 0
+#define MAX_CPGI_DIGITS 16
+#define DEBUG_OVERLAP 1
 
 typedef struct
 {
@@ -67,6 +69,7 @@ struct CpGIOverlap_stream {
     int building_buffer;
     int eof_found;
     unsigned long CpGI_number;
+    char latest_cpgi_name[MAX_CPGI_DIGITS + 6]; // leave space for CpGI_
 };
 
 typedef enum { FT_CPGI, FT_GENE, FT_OTHER } overlap_feature_type_t;
@@ -104,6 +107,7 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
      *   with the last discovered CpGI or until end of stream
      *
      */
+    char cpgi_name_buf[MAX_CPGI_DIGITS + 6];
     overlap_feature_type_t feature_type;
     CpGIOverlap_stream * overlap_stream;
     GtGenomeNode * cur_node;
@@ -199,8 +203,8 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
                         printf("In a GENE\n");
                         #endif
 
-                        if (gt_genome_node_get_start(cur_node) == 28500)
-                           printf("Found the gene within gene 28500\n");
+                        if (gt_genome_node_get_start(cur_node) == 23146)
+                           printf("Found the gene within gene 23146\n");
 
                         overlap_stream->latest_gene_node = cur_node;
                         overlap_stream->latest_tss = (gt_feature_node_get_strand(cur_node) == GT_STRAND_FORWARD) ? gt_genome_node_get_start(cur_node) : 
@@ -212,7 +216,11 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
                            #if DEBUG_OVERLAP
                            printf("GENE found and marked\n");
                            #endif
-
+                           printf("Overlap\n");
+                           gt_feature_node_set_attribute(overlap_stream->latest_gene_node,
+                                                         "CpGI_at_TSS",
+                                                        gt_feature_node_get_attribute(overlap_stream->latest_CpGI_node, "Name")
+                                                        );
                            // TODO: mark current node
                            // mark it, we're on our way
                            overlap_stream->building_buffer = 0;
@@ -246,13 +254,24 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
                         #if DEBUG_OVERLAP
                         printf("CPGI found\n");
                         #endif
-
+                        overlap_stream->latest_CpGI_node = cur_node;
                         (overlap_stream->CpGI_number)++;
+                        sprintf(cpgi_name_buf,"CpGI_%lu", overlap_stream->CpGI_number);
+                        
+                        gt_feature_node_set_attribute(cur_node, 
+                                                      "Name", 
+                                                      cpgi_name_buf
+                                                      );
 
                         // test previous gene, then clear the buffer
-                        if (in_island(overlap_stream->latest_tss, overlap_stream->island))
+                        if (overlap_stream->building_buffer && in_island(overlap_stream->latest_tss, overlap_stream->island))
                         {
-                           //TODO: mark the gene
+                           printf("Overlap\n");  
+                           gt_feature_node_set_attribute(overlap_stream->latest_gene_node,
+                                                         "CpGI_at_TSS",
+                                                        gt_feature_node_get_attribute(overlap_stream->latest_CpGI_node, "Name")
+                                                        );
+                           
                         }
                        
                         overlap_stream->building_buffer = 0;
