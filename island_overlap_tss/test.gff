@@ -1,0 +1,13 @@
+##gff-version   3
+##sequence-region   Chr1 1 30427671
+Chr1	TAIR10	gene	1	10	.	-	.	ID=gene125;Note=protein_coding_gene;Name=AT1G02130
+Chr1	.	CpGI	9	11	.	.	.	Name=CpGI_56
+Chr1	TAIR10	gene	11	40	.	+	.	ID=gene126;Note=protein_coding_gene;Name=AT1G02131
+Chr1	TAIR10	gene	45	55	.	-	.	ID=gene127;Note=protein_coding_gene;Name=AT1G02132
+Chr1	.	CpGI	60	100	.	.	.	Name=CpGI_57
+Chr1	TAIR10	gene	70	80	.	+	.	ID=gene128;Note=protein_coding_gene;Name=AT1G02133
+Chr1	TAIR10	gene	91	99	.	-	.	ID=gene129;Note=protein_coding_gene;Name=AT1G02134
+Chr1	.	CpGI	102	104	.	.	.	Name=CpGI_58
+Chr1	TAIR10	gene	105	499	.	-	.	ID=gene130;Note=protein_coding_gene;Name=AT1G02135
+###
+
