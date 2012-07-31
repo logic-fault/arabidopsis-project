@@ -303,7 +303,7 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
                         if (overlap_stream->building_buffer && in_island(overlap_stream->latest_tss, overlap_stream->island))
                         {
                            gt_feature_node_set_attribute(overlap_stream->latest_gene_node,
-                                                         "CpGI_at_TSS",
+                                                         "cpgi_at_tss",
                                                         gt_feature_node_get_attribute(overlap_stream->latest_CpGI_node, "Name")
                                                         );
                            
