@@ -18,14 +18,19 @@ GT_LDFLAGS:=-L$(prefix)/lib \
             -L/usr/local/lib \
             -L/opt/local/lib
 
-SOURCES=island_overlap_tss.c CpGIOverlap_stream/CpGIOverlap_stream.c CpGI_score_stream/CpGI_score_stream.c
-OBJECTS=$(SOURCES:.c=.o)
+TSS_SOURCES=island_overlap_tss.c CpGIOverlap_stream/CpGIOverlap_stream.c 
+SCORE_SOURCES=island_score.c CpGI_score_stream/CpGI_score_stream.c
+TSS_OBJECTS=$(TSS_SOURCES:.c=.o)
+SCORE_OBJECTS=$(SCORE_SOURCES:.c=.o)
 
-all: $(SOURCES) island_overlap_tss
+all: $(SOURCES) island_overlap_tss island_score
 
-island_overlap_tss: $(OBJECTS)
-	$(LD) $(LDFLAGS) $(GT_LDFLAGS) $(OBJECTS) -lm -lgenometools -lcairo -o $@
+island_overlap_tss: $(TSS_OBJECTS)
+	$(LD) $(LDFLAGS) $(GT_LDFLAGS) $(TSS_OBJECTS) -lm -lgenometools -lcairo -o $@
 
+
+island_score: $(SCORE_OBJECTS)
+	$(LD) $(LDFLAGS) $(GT_LDFLAGS) $(SCORE_OBJECTS) -lm -lgenometools -lcairo -o $@
 
 # generic compilation rule which creates dependency file on the fly
 .c.o:
@@ -36,4 +41,4 @@ island_overlap_tss: $(OBJECTS)
 
 .PHONY: clean
 clean:
-	rm -f *.[od] island_overlap_tss
+	rm -f *.[od] island_overlap_tss island_score
