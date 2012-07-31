@@ -5,7 +5,7 @@
 * Released to public domain without restriction
 *
 * @section DESCRIPTION
-* Find CpGI and score them based upon methylome db
+*   Score genes based upon input rna-seq db
 *
 *
 *************************************************/
@@ -19,23 +19,26 @@ struct gene_expression_score_stream {
     const GtNodeStream parent_instance;
     GtNodeStream * in_stream;
     FILE * rnaseq_file;
+
+    // values saved from db
+    char[255] previous_name;
+    float previous_expression;
   
     // we store these in case we fscanf'd an entry too far
 };
 
-static const char * feature_type_gene = "Gene";
+static const char * feature_type_gene = "gene";
 
 
 const GtNodeStreamClass * gene_expression_score_stream_class(void);
 
-#define gene_expression_score_stream_cast(GS) gt_node_stream_cast(CpGI_score_stream_class(), GS);
+#define gene_expression_score_stream_cast(GS) gt_node_stream_cast(gene_expression_score_stream_class(), GS);
 
 static float gene_expression_score_stream_score_gene(gene_expression_score_stream * context,
                                                      const char * gene_name;
                                                     )
 {
     float score = 0.0f;
-
     return score;
 }
 
@@ -43,11 +46,13 @@ static int gene_expression_score_stream_next(GtNodeStream * ns,
                                    GtGenomeNode ** gn,
                                    GtError * err)
 {
-    GtGenomeNode * cur_node;
+    GtGenomeNode * cur_node, * next_node;
     int err_num = 0;
     *gn = NULL;
-    gene_expression_score_stream * score_stream;
+    gene_expression_score_stream * context;
     const char * gene_name = NULL;
+
+    float gene_expression_score;
 
 
     context = gene_expression_score_stream_cast(ns);
@@ -68,24 +73,28 @@ static int gene_expression_score_stream_next(GtNodeStream * ns,
          }
          else // we found a feature node
          {
-              if(!gt_feature_node_has_type(cur_node, feature_type_CpGI))
+              // first check if it is a pseudo node, if so find the gene in it if available
+              if (gt_feature_node_is_pseudo(cur_node))
+              {
+                  iter = gt_feature_node_iterator_new(cur_node);
+                  while (!gt_feature_node_has_type(next_node = gt_feature_node_iterator_next(iter), feature_type_gene) && next_node)
+                  gt_feature_node_iterator_delete(iter);
+                  if (NULL == (cur_node = next_node))
+                     return 0;
+              }
+
+
+              if(!gt_feature_node_has_type(cur_node, feature_type_gene))
                   return 0;
 
- 
-              island_start = gt_genome_node_get_start(cur_node);
-              island_end   = gt_genome_node_get_end(cur_node);
+              // find name of gene
+              gene_name = gt_feature_node_get_attribute(cur_node, "Name") 
 
-              seqID_gtstr = gt_genome_node_get_seqid(cur_node);
-              seqID_str   = gt_str_get(seqID_gtstr);
-
-              sscanf(seqID_str, "Chr%d", &chromosome_num);
+              if (gene_name == NULL)
+                  return;
 
               // now figure out the score
-              island_score = gene_expression_score_stream_score_island(score_stream ,
-                                                            chromosome_num,
-                                                            island_start,
-                                                            island_end);
-//              gt_str_delete(seqID_gtstr);
+              gene_expression_score = gene_expression_score_stream_score_island(context, gene_name);
 
               // save the score into the node
               gt_feature_node_set_score(cur_node, island_score);
@@ -129,6 +138,8 @@ GtNodeStream * gene_expression_score_stream_new(GtNodeStream * in_stream, const 
     gene_expression_score_stream * context = gene_expression_score_stream_cast(ns);
     gt_assert(in_stream);
     context->in_stream = gt_node_stream_ref(in_stream);
+    context->previous_name[0]    = 0;
+    context->previous_expression = 0.0f;
 
     if ((context->rnaseq_file = fopen(rnaseq_db, "r")) == NULL)
     {
