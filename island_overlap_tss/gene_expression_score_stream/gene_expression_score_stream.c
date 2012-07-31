@@ -20,11 +20,6 @@ struct gene_expression_score_stream {
     GtNodeStream * in_stream;
     FILE * rnaseq_file;
 
-    // values saved from db
-    char[255] previous_name;
-    float previous_expression;
-  
-    // we store these in case we fscanf'd an entry too far
 };
 
 static const char * feature_type_gene = "gene";
@@ -34,11 +29,23 @@ const GtNodeStreamClass * gene_expression_score_stream_class(void);
 
 #define gene_expression_score_stream_cast(GS) gt_node_stream_cast(gene_expression_score_stream_class(), GS);
 
-static float gene_expression_score_stream_score_gene(gene_expression_score_stream * context,
-                                                     const char * gene_name;
+static float gene_expression_score_stream_score_gene( gene_expression_score_stream * context,
+                                                     const char * gene_name
                                                     )
 {
+    char found_name[255];
+    char trash_buffer[255];
+    float found_expression;
     float score = 0.0f;
+
+    // this is slow but we rewind the rna-seq each time because it's out of sequence
+    rewind(context->rnaseq_file);
+
+    while (3 == fscanf(context->rnaseq_file, "%s %s %f", found_name, trash_buffer, &found_expression) )
+    {
+        if (strcmp(found_name, gene_name) == 0)
+            score += found_expression;
+    }
     return score;
 }
 
@@ -47,6 +54,7 @@ static int gene_expression_score_stream_next(GtNodeStream * ns,
                                    GtError * err)
 {
     GtGenomeNode * cur_node, * next_node;
+    GtFeatureNodeIterator * iter;
     int err_num = 0;
     *gn = NULL;
     gene_expression_score_stream * context;
@@ -77,7 +85,9 @@ static int gene_expression_score_stream_next(GtNodeStream * ns,
               if (gt_feature_node_is_pseudo(cur_node))
               {
                   iter = gt_feature_node_iterator_new(cur_node);
-                  while (!gt_feature_node_has_type(next_node = gt_feature_node_iterator_next(iter), feature_type_gene) && next_node)
+                  if (iter == NULL)
+                      return;
+                  while ((next_node = gt_feature_node_iterator_next(iter)) && !gt_feature_node_has_type(next_node, feature_type_gene));
                   gt_feature_node_iterator_delete(iter);
                   if (NULL == (cur_node = next_node))
                      return 0;
@@ -88,16 +98,16 @@ static int gene_expression_score_stream_next(GtNodeStream * ns,
                   return 0;
 
               // find name of gene
-              gene_name = gt_feature_node_get_attribute(cur_node, "Name") 
+              gene_name = gt_feature_node_get_attribute(cur_node, "Name");
 
               if (gene_name == NULL)
                   return;
 
               // now figure out the score
-              gene_expression_score = gene_expression_score_stream_score_island(context, gene_name);
+              gene_expression_score = gene_expression_score_stream_score_gene(context, gene_name);
 
               // save the score into the node
-              gt_feature_node_set_score(cur_node, island_score);
+              gt_feature_node_set_score(cur_node, gene_expression_score);
               
               return 0;
 
@@ -138,8 +148,6 @@ GtNodeStream * gene_expression_score_stream_new(GtNodeStream * in_stream, const 
     gene_expression_score_stream * context = gene_expression_score_stream_cast(ns);
     gt_assert(in_stream);
     context->in_stream = gt_node_stream_ref(in_stream);
-    context->previous_name[0]    = 0;
-    context->previous_expression = 0.0f;
 
     if ((context->rnaseq_file = fopen(rnaseq_db, "r")) == NULL)
     {

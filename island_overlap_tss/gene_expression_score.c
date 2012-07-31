@@ -5,7 +5,7 @@
 * Released to public domain without restriction
 *
 * @section DESCRIPTION
-*  score the CpGI based upon methylome
+*  score the genes based upon rnaseq
 *
 *************************************************/
 #include "genometools.h"	
@@ -40,6 +40,8 @@ int main(int argc, char ** argv)
         fprintf(stderr, "Failed to open input stream with arg %s\n", argv[1]);
         exit(1);
     }
+
+    gt_gff3_in_stream_show_progress_bar(in);
 
     if (!(out_file = gt_file_new(argv[2], "w+", err)))
     {
