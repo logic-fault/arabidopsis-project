@@ -249,7 +249,7 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
                            printf("GENE found and marked\n");
                            #endif
                            gt_feature_node_set_attribute(overlap_stream->latest_gene_node,
-                                                         "CpGI_at_TSS",
+                                                         "cpgi_at_tss",
                                                         gt_feature_node_get_attribute(overlap_stream->latest_CpGI_node, "Name")
                                                         );
                            // TODO: mark current node
