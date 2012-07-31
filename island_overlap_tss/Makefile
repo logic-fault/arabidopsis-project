@@ -35,7 +35,7 @@ island_score: $(SCORE_OBJECTS)
 	$(LD) $(LDFLAGS) $(GT_LDFLAGS) $(SCORE_OBJECTS) -lm -lgenometools -lcairo -o $@
 
 expression_score: $(EXPRESSION_OBJECTS)
-	$(LD) $(LDFLAGS) $(GT_LDFLAGS) $(SCORE_OBJECTS) -lm -lgenometools -lcairo -o $@
+	$(LD) $(LDFLAGS) $(GT_LDFLAGS) $(EXPRESSION_OBJECTS) -lm -lgenometools -lcairo -o $@
 
 # generic compilation rule which creates dependency file on the fly
 .c.o:
