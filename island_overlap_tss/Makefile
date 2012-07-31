@@ -18,7 +18,7 @@ GT_LDFLAGS:=-L$(prefix)/lib \
             -L/usr/local/lib \
             -L/opt/local/lib
 
-SOURCES=island_overlap_tss.c CpGIOverlap_stream/CpGIOverlap_stream.c
+SOURCES=island_overlap_tss.c CpGIOverlap_stream/CpGIOverlap_stream.c CpGI_score_stream/CpGI_score_stream.c
 OBJECTS=$(SOURCES:.c=.o)
 
 all: $(SOURCES) island_overlap_tss
