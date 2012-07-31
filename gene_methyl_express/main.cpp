@@ -11,86 +11,116 @@
  *************************************************/
 
 #include <boost/tokenizer.hpp>
+#include <fstream>
 #include <iostream>
 #include <string>
 
+std::string locate_island_score(std::ifstream * island_stream, std::string name)
+{
+ 
+    // this is really inneficient and needs to be fixed  
+ 
+    island_stream->seekg(0, std::ios::beg);
+    while (*island_stream)
+    {
+        std::string cpgi_name;
+        std::string line;
+   
+        std::getline(*island_stream, line);
+        boost::char_separator<char> sep(", \t", "", boost::drop_empty_tokens);
+        boost::tokenizer<boost::char_separator<char> > tok(line, sep);
+        boost::tokenizer<boost::char_separator<char> >::iterator cur = tok.begin();
 
-typedef enum { ID_FIELD, FT_FIELD, UNKNOWN_FIELD } field_t;
+        std::string value;
+
+        // don't process empty line
+        if (cur == tok.end())
+           continue;
+
+        value = *cur;
+
+        // see if the island matched
+        if (value != name)
+            continue;
+
+        cur++; // go to next field
+        
+        if (cur == tok.end())
+           continue;
+
+        return *cur;  
+
+    }
+    
+    return "NA";
+}
+
 
 int main(int argc, char ** argv)
 {
-    std::string seqid;
-    std::string line;
-    std::string start_base, end_base;
 
-    std::cout << "##gff-version 3" << std::endl;
-
-    while (std::cin)
+    if (argc < 3)
     {
-        field_t field = UNKNOWN_FIELD;
-        int col = 1;
+       std::cout << "Usage: " << argv[0] << " <gene file> <island file>" << std::endl;
+       return 0;
+    }
 
-        bool has_cpg_coords  = false;
-        bool cpg_coords_found = false;
+    std::ifstream gene_file(argv[1]);
 
-        size_t dot_loc;
-        std::getline(std::cin, line);
-        boost::tokenizer<> tok(line);
-        boost::tokenizer<>::iterator cur = tok.begin();
- 
-   
+    if (!gene_file.is_open())
+    {
+        std::cout << "Error opening gene file" << std::endl;
+        return 0;
+    } 
 
-        if (tok.begin() != tok.end())
-        {
-           if (cur->compare("ID") == 0)
-              field = ID_FIELD;
-           else if (cur->compare("FT") == 0)
-              field = FT_FIELD;
-           else
-              continue; // bad field
-        }
-        else
-          continue;
- 
-        cur++;
+    std::ifstream island_file(argv[2]);
+
+    if (!island_file.is_open())
+    {
+        std::cout << "Error opening island file" << std::endl;
+        return 0;
+    } 
+
+    while (gene_file)
+    {
+        int col = 0;
+        bool methylation_found  = false;
+        std::string island_name;     
+        std::string expression_level;
+        std::string line;
+        std::string  methylation_score;
+
+
+        std::getline(gene_file, line);
+        boost::char_separator<char> sep(", \t", "", boost::drop_empty_tokens);
+        boost::tokenizer<boost::char_separator<char> > tok(line, sep);
+        boost::tokenizer<boost::char_separator<char> >::iterator cur = tok.begin();
 
         for (; cur!= tok.end(); cur++)
         { 
             col++;
-            switch(field)
+            
+            // first column is expression level
+            if (col == 1)
             {
-            case FT_FIELD:
-                if (col == 2 && !cur->compare("CpG"))
-                {
-                   has_cpg_coords = true;
-                   break;
-                }
-                if (col == 4 && has_cpg_coords)
-                {
-                   start_base = *cur;
-                }
-                if (col == 5 && has_cpg_coords)
-                {
-                   end_base = *cur;
-                   cpg_coords_found = true;
-                }
-                break;
-            case ID_FIELD:
-                if (col == 2)
-                   seqid = *cur;
+                expression_level = *cur;
+            }
+
+            // we y want to find the CpGI
+            if (col == 3)
+            {
+                island_name = *cur;
+//                std::cout << island_name << std::endl;
+                methylation_score = locate_island_score(&island_file, island_name);
+                if (methylation_score != "NA")
+                    methylation_found = true;
                 break;
             }
         }
-       if (cpg_coords_found)
-           std::cout << seqid << "\t"
-                     << "."   << "\t" 
-                     << "CpGI" << "\t"
-                     << start_base << "\t" 
-                     << end_base <<"\t"
-                     << "."      << "\t"
-                     << "."      << "\t"
-                     << "."      << "\t"
-                     << " "      << std::endl;
+
+       if (methylation_found)
+           std::cout << methylation_score << "\t"
+                     << expression_level  <<  std::endl;
     }
    return 0;
 }
