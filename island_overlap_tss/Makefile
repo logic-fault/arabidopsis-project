@@ -23,7 +23,7 @@ SCORE_SOURCES=island_score.c CpGI_score_stream/CpGI_score_stream.c
 TSS_OBJECTS=$(TSS_SOURCES:.c=.o)
 SCORE_OBJECTS=$(SCORE_SOURCES:.c=.o)
 
-all: $(SOURCES) island_overlap_tss island_score
+all: $(TSS_SOURCES) $(SCORE_SOURCES) island_overlap_tss island_score
 
 island_overlap_tss: $(TSS_OBJECTS)
 	$(LD) $(LDFLAGS) $(GT_LDFLAGS) $(TSS_OBJECTS) -lm -lgenometools -lcairo -o $@
