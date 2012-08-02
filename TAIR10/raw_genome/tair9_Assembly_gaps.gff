@@ -1,3 +1,4 @@
+##gff-version 3
 Chr1	TAIR8	gap	13201253	13201352	.	+	.	NOTE=Size_100_Contamination_E.coli
 Chr1	TAIR8	gap	13993096	13993195	.	+	.	NOTE=Size_100_Contamination_E.coli
 Chr1	TAIR8	gap	14309682	14309741	.	+	.	NOTE=Size_60_exact sizes of the gaps are unknown

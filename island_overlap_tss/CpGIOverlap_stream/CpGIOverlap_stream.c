@@ -299,6 +299,15 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
                         overlap_stream->island.start = gt_genome_node_get_start(cur_node);
                         overlap_stream->island.end   = gt_genome_node_get_end(cur_node);
 
+                        // TODO: we can only clear the buffer here if this island's end is greater than last gene's TSS
+                        if (overlap_stream->building_buffer && overlap_stream->island.end < overlap_stream->latest_tss)
+                        {
+                           // this one didn't fit but we keep the buffer because another island may show up
+                           // keep the record of the last gene
+                           gt_array_add(overlap_stream->node_buffer, cur_node);
+                           break;
+                        }
+
                         // test previous gene, then clear the buffer
                         if (overlap_stream->building_buffer && in_island(overlap_stream->latest_tss, overlap_stream->island))
                         {

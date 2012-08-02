@@ -23,13 +23,12 @@ SCORE_SOURCES=island_score.c CpGI_score_stream/CpGI_score_stream.c
 EXPRESSION_SOURCES=gene_expression_score.c gene_expression_score_stream/gene_expression_score_stream.c
 TSS_OBJECTS=$(TSS_SOURCES:.c=.o)
 SCORE_OBJECTS=$(SCORE_SOURCES:.c=.o)
-EXPRESSION_OBJECTS=$(EXPRESSION_SOURCES .c=.o)
+EXPRESSION_OBJECTS=$(EXPRESSION_SOURCES:.c=.o)
 
 all: $(TSS_SOURCES) $(SCORE_SOURCES) island_overlap_tss island_score expression_score
 
 island_overlap_tss: $(TSS_OBJECTS)
 	$(LD) $(LDFLAGS) $(GT_LDFLAGS) $(TSS_OBJECTS) -lm -lgenometools -lcairo -o $@
-
 
 island_score: $(SCORE_OBJECTS)
 	$(LD) $(LDFLAGS) $(GT_LDFLAGS) $(SCORE_OBJECTS) -lm -lgenometools -lcairo -o $@
