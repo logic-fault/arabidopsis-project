@@ -1,1 +1,1 @@
-sudo g++ -g main.cpp -L/usr/lib -lboost_regex -oCGItoGFF3
+g++ -g main.cpp -L/usr/lib -lboost_regex -oCGItoGFF3

@@ -41,12 +41,13 @@ const GtNodeStreamClass * CpGI_score_stream_class(void);
 
 static float CpGI_score_stream_score_island(CpGI_score_stream * context,
                                             int island_chromosome_num,
+                                            unsigned long num_cg,
                                             unsigned long island_start,
                                             unsigned long island_end
                                          )
 {
     // iterate through the methylome db to find all entries
-    // score is sum(entries in island range) / (island_end - island_start + 1)
+    // score is sum(entries in island range) / (num_cg)
     //
     // assume both streams are sorted
 
@@ -54,6 +55,9 @@ static float CpGI_score_stream_score_island(CpGI_score_stream * context,
     int chromosome_num = island_chromosome_num;
     float methylation;
     float score = 0.0f;
+
+    if (num_cg == 0)
+        return 0.0f;
 
     // first see if the previous data matches this CpGI
     if (context->previous_methylome_chromosome == island_chromosome_num &&
@@ -74,7 +78,7 @@ static float CpGI_score_stream_score_island(CpGI_score_stream * context,
     context->previous_methylome_fraction = methylation;
     context->previous_methylome_chromosome = chromosome_num;
 
-    score = score / (float)(island_end - island_start + 1);
+    score = score / (float)(num_cg);
 
     return score;
 }
@@ -93,6 +97,8 @@ static int CpGI_score_stream_next(GtNodeStream * ns,
     int chromosome_num;
     GtStr * seqID_gtstr;
     char *  seqID_str;
+    char *  num_cg_str;
+    unsigned long num_cg = 0;
 
     score_stream = CpGI_score_stream_cast(ns);
 
@@ -124,12 +130,18 @@ static int CpGI_score_stream_next(GtNodeStream * ns,
 
               seqID_gtstr = gt_genome_node_get_seqid(cur_node);
               seqID_str   = gt_str_get(seqID_gtstr);
-
               sscanf(seqID_str, "Chr%d", &chromosome_num);
+
+              num_cg_str = gt_feature_node_get_attribute(cur_node, "sumcg");
+              if (!num_cg_str)
+                 return 0;
+              
+              sscanf(num_cg_str, "%d", &num_cg);             
 
               // now figure out the score
               island_score = CpGI_score_stream_score_island(score_stream ,
                                                             chromosome_num,
+                                                            num_cg,
                                                             island_start,
                                                             island_end);
 //              gt_str_delete(seqID_gtstr);
