@@ -4,6 +4,6 @@
 
 #include "CpGIOverlap_stream_api.h"
 
-const GtNodeStreamClass * CpGI_overlap_stream_class(void);
+const GtNodeStreamClass * CpGI_overlap_stream_class(void );
 
 #endif

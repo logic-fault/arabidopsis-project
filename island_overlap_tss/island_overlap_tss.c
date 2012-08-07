@@ -15,10 +15,10 @@
 
 void usage(const char * name)
 {
-   printf("Usage: %s <in fileName> <out fileName> \n", name);
+   printf("Usage: %s <in fileName> <out fileName> <cpgi fileName> \n", name);
 }
 
-inline int in_range(unsigned long num, unsigned long min, unsigned long max)
+static inline int in_range(unsigned long num, unsigned long min, unsigned long max)
 {
    return (num >= min && num <= max) ? 1 : 0;
 }
@@ -29,7 +29,7 @@ int main(int argc, char ** argv)
     GtFile * out_file;
     GtError * err;
 
-    if (argc != 3)
+    if (argc != 4)
     {
        usage(argv[0]);
        exit(1);
@@ -45,6 +45,8 @@ int main(int argc, char ** argv)
         exit(1);
     }
 
+    gt_gff3_in_stream_show_progress_bar(in);
+
     if (!(out_file = gt_file_new(argv[2], "w+", err)))
     {
         gt_node_stream_delete(in);
@@ -52,7 +54,7 @@ int main(int argc, char ** argv)
         exit(1);
     }
 
-    if (!(overlap = CpGIOverlap_stream_new(in)))
+    if (!(overlap = CpGIOverlap_stream_new(in, argv[3])))
     {
 
         gt_file_delete(out_file);

@@ -154,7 +154,7 @@ static void island_nuc_score_stream_free(GtNodeStream * ns)
     island_nuc_score_stream * score_stream;
     
     score_stream = island_nuc_score_stream_cast(ns);
-    fclose(score_stream->methylome_file);
+    fclose(score_stream->nucleosome_file);
     return;
 }
 
@@ -187,7 +187,7 @@ GtNodeStream * island_nuc_score_stream_new(GtNodeStream * in_stream, const char 
     if ((score_stream->nucleosome_file = fopen(nucleosome_db, "r")) == NULL)
     {
        gt_node_stream_delete(ns);
-       fprintf(stderr, "Failed to open nucleosome db file %s\n", methylome_db);
+       fprintf(stderr, "Failed to open nucleosome db file %s\n", nucleosome_db);
        return NULL;
     }
 

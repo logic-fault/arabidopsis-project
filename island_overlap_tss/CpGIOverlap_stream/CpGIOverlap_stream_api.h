@@ -11,6 +11,6 @@
 
 typedef struct CpGIOverlap_stream CpGIOverlap_stream;
 
-GtNodeStream* CpGI_overlap_stream_new(GtNodeStream * in_stream);
+GtNodeStream* CpGI_overlap_stream_new(GtNodeStream * in_stream, const char * cpgi_db);
 
 #endif
