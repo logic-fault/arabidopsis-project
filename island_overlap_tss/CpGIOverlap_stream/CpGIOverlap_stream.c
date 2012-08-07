@@ -30,9 +30,9 @@ const GtNodeStreamClass * CpGIOverlap_stream_class(void);
 #define CpGIOverlap_stream_cast(GS) gt_node_stream_cast(CpGIOverlap_stream_class(), GS);
 
 
-static inline void in_range(unsigned long n, unsigned long s, unsigned long e)
+static inline int in_range(unsigned long n, unsigned long s, unsigned long e)
 {
-    return (n >= s && n <= e);
+    return (n >= s && n <= e) ? 1 : 0;
 }
 
 // not thread safe
@@ -81,7 +81,7 @@ const char * CpGIOverlap_stream_find_gene_overlap( CpGIOverlap_stream * context,
         // we have to search backwards from the current position for a newline marker
         while (! ( err = fseek(context->cpgi_file, -2, SEEK_CUR)))
         {
-           fread(&buf, 1, 1, context->cpgi_file)
+           fread(&buf, 1, 1, context->cpgi_file);
            if (buf == '\n') // look for newline
                break;
         }
@@ -97,7 +97,10 @@ const char * CpGIOverlap_stream_find_gene_overlap( CpGIOverlap_stream * context,
             break; // something went wrong
 
         if (chromosome == island_chromosome && in_range(TSS, island_start, island_end))
+        {
+             printf("Found special");
              return found_island_name;
+        }
 
         fseek(context->cpgi_file, file_start_search_pos, SEEK_SET);
     }
@@ -116,8 +119,9 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
     CpGIOverlap_stream * context;
     const char * gene_name = NULL;
     const char * overlap_name = NULL;
-    char [255] chr_str;
+    char  chr_str[255];
     int  chr_num;
+    unsigned int TSS;
 
     float CpGIOverlap;
 
@@ -165,14 +169,14 @@ static int CpGIOverlap_stream_next(GtNodeStream * ns,
               if ( 1 != sscanf(gt_str_get(gt_genome_node_get_seqid(cur_node)), "Chr%d", &chr_num))
                   return 0;
 
-              // now figure out the score
-              if (! (overlap_name = CpGIOverlap_stream_find_gene_overlap( context, gene_name, chr_num)))
+              TSS = (gt_feature_node_get_strand(cur_node) == GT_STRAND_FORWARD) ? gt_genome_node_get_start(cur_node) : gt_genome_node_get_end(cur_node);
+
+              // now figure out the overlapping gene 
+              if (! (overlap_name = CpGIOverlap_stream_find_gene_overlap( context, TSS, chr_num)))
                  return 0;
 
-              CpGIOverlap = CpGIOverlap_stream_score_gene(context, gene_name);
-
               // save the score into the node
-              gt_feature_node_set_attribute(cur_node, "cpgi_at_tss", CpGIOverlap);
+              gt_feature_node_set_attribute(cur_node, "cpgi_at_tss", overlap_name);
               
               return 0;
 
@@ -187,7 +191,7 @@ static void CpGIOverlap_stream_free(GtNodeStream * ns)
     CpGIOverlap_stream * score_stream;
     
     score_stream = CpGIOverlap_stream_cast(ns);
-    fclose(score_stream->rnaseq_file);
+    fclose(score_stream->cpgi_file);
     return;
 }
 
@@ -217,7 +221,7 @@ GtNodeStream * CpGIOverlap_stream_new(GtNodeStream * in_stream, const char * cpg
     if ((context->cpgi_file = fopen(cpgi_db, "r")) == NULL)
     {
        gt_node_stream_delete(ns);
-       fprintf(stderr, "Failed to open CpG Island db file %s\n", rnaseq_db);
+       fprintf(stderr, "Failed to open CpG Island db file %s\n", cpgi_db);
        return NULL;
     }
 
